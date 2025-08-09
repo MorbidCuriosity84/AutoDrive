@@ -1,4 +1,4 @@
-from typing import Tuple, List
+from typing import List
 from queue import Queue
 from point import Point
 
@@ -13,7 +13,7 @@ class Car:
     }
 
 
-    def __init__(self, pos: Tuple[int, int], moves: List[str], direction: str):        
+    def __init__(self, pos: Point, moves: List[str], direction: str):        
         self.pos: Point = pos
         self.moves: Queue[str] = moves
         self.direction: str = direction
