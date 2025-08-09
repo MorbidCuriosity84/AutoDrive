@@ -49,19 +49,17 @@ class Car:
                     return
 
 
-    def move(self, size_x: int, size_y: int) -> None:
-        # Pop next move from queue
-        move = self.moves.get()
-        
+    def move(self, move: str, size_x: int, size_y: int) -> None:                
+                
         if move == 'R' or move =='L':
             self.turn(move)
         else: # Move = 'F'  check valid move then update else ignore move
-            if self.check_move(move, size_x, size_y):
+            if self.check_move(Car.move_map[self.direction], size_x, size_y):
                 self.update_pos(Car.move_map[self.direction])
 
 
     def check_move(self, move: Tuple[int, int], size_x: int, size_y: int) -> bool:                    
-
+        
         if self.pos[0] + move[0] > size_x:
             return False
         
@@ -78,4 +76,4 @@ class Car:
     
     
     def update_pos(self, move: Tuple[int, int]) -> None:        
-        self.pos = (self.pos + move[0], self.pos[1] + move[1])
+        self.pos = (self.pos[0] + move[0], self.pos[1] + move[1])
