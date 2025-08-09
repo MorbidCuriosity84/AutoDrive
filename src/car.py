@@ -1,19 +1,20 @@
 from typing import Tuple, List
 from queue import Queue
+from point import Point
 
 
 class Car:
 
-    move_map: dict = {
-        'N': (0, 1),
-        'S': (0, -1),
-        'E': (1, 0),
-        'W': (-1, 0)        
+    move_map: dict[str, Point] = {
+        'N': Point(0, 1),
+        'S': Point(0, -1),
+        'E': Point(1, 0),
+        'W': Point(-1, 0)        
     }
 
 
     def __init__(self, pos: Tuple[int, int], moves: List[str], direction: str):        
-        self.pos: Tuple[int, int] = pos
+        self.pos: Point = pos
         self.moves: Queue[str] = moves
         self.direction: str = direction
         self.active = True
@@ -50,7 +51,7 @@ class Car:
 
 
     def move(self, move: str, size_x: int, size_y: int) -> None:                
-                
+
         if move == 'R' or move =='L':
             self.turn(move)
         else: # Move = 'F'  check valid move then update else ignore move
@@ -58,22 +59,25 @@ class Car:
                 self.update_pos(Car.move_map[self.direction])
 
 
-    def check_move(self, move: Tuple[int, int], size_x: int, size_y: int) -> bool:                    
-        
-        if self.pos[0] + move[0] > size_x:
+    def check_move(self, move: Point, size_x: int, size_y: int) -> bool:
+        print('before ', self.pos, move)
+        pos_after_move = self.pos + move
+        print('after ', self.pos, move)
+
+        if pos_after_move.x > size_x:
             return False
         
-        if self.pos[0] + move[0] < 0:
+        if pos_after_move.x < 0:
             return False
 
-        if self.pos[1] + move[1] > size_y:
+        if pos_after_move.y > size_y:
             return False
         
-        if self.pos[1] + move[1] < 0:
+        if pos_after_move.y < 0:
             return False
         
         return True
     
     
-    def update_pos(self, move: Tuple[int, int]) -> None:        
-        self.pos = (self.pos[0] + move[0], self.pos[1] + move[1])
+    def update_pos(self, move: Point) -> None:        
+        self.pos += move
