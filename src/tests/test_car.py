@@ -16,3 +16,18 @@ def field() -> Field:
 def test_check_move(car, field):        
     valid = car.check_move(Car.move_map[car.direction], field.size[0], field.size[1])
     assert not valid
+
+def test_check_move_2(car, field):
+    car.direction = 'W'
+    valid = car.check_move(Car.move_map[car.direction], field.size[0], field.size[1])
+    assert not valid
+
+def test_check_move_3(car, field):
+    car.direction = 'N'
+    valid = car.check_move(Car.move_map[car.direction], field.size[0], field.size[1])
+    assert valid
+
+def test_check_move_4(car, field):
+    car.direction = 'E'
+    valid = car.check_move(Car.move_map[car.direction], field.size[0], field.size[1])
+    assert valid

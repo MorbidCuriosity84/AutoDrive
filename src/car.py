@@ -1,4 +1,6 @@
 from typing import Tuple, List
+from queue import Queue
+
 
 class Car:
 
@@ -9,14 +11,54 @@ class Car:
         'W': (-1, 0)        
     }
 
+
     def __init__(self, pos: Tuple[int, int], moves: List[str], direction: str):        
         self.pos: Tuple[int, int] = pos
-        self.moves: List[str] = moves
+        self.moves: Queue[str] = moves
         self.direction: str = direction
         self.active = True
 
-    def move(self, size_x: int, size_y: int):
-        pass
+
+    def turn(self, turn: str) -> None:
+        match(turn):
+            case 'L':
+                if self.direction == 'N':
+                    self.direction = 'W'
+                    return
+                if self.direction == 'W':
+                    self.direction = 'S'
+                    return
+                if self.direction == 'S':
+                    self.direction = 'E'
+                    return
+                if self.direction == 'E':
+                    self.direction = 'N'
+                    return                
+            case 'R':
+                if self.direction == 'N':
+                    self.direction = 'E'
+                    return
+                if self.direction == 'E':
+                    self.direction = 'S'
+                    return
+                if self.direction == 'S':
+                    self.direction = 'W'
+                    return
+                if self.direction == 'W':
+                    self.direction = 'N'
+                    return
+
+
+    def move(self, size_x: int, size_y: int) -> None:
+        # Pop next move from queue
+        move = self.moves.get()
+        
+        if move == 'R' or move =='L':
+            self.turn(move)
+        else: # Move = 'F'  check valid move then update else ignore move
+            if self.check_move(move, size_x, size_y):
+                self.update_pos(Car.move_map[self.direction])
+
 
     def check_move(self, move: Tuple[int, int], size_x: int, size_y: int) -> bool:                    
 
@@ -34,5 +76,6 @@ class Car:
         
         return True
     
-    def update_pos(self, move: Tuple[int, int]):        
+    
+    def update_pos(self, move: Tuple[int, int]) -> None:        
         self.pos = (self.pos + move[0], self.pos[1] + move[1])
