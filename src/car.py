@@ -85,4 +85,5 @@ class Car:
         self.moves = []
 
     def __repr__(self):        
-        return f"- {self.name}, ({self.pos.x},{self.pos.y}) {self.direction}, {self.moves}\n"
+        moves = f', {"".join([mv for mv in self.moves[::-1]])}' if self.moves else ''
+        return f"- {self.name}, ({self.pos.x},{self.pos.y}) {self.direction}{moves}"
