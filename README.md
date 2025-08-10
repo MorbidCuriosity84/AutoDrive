@@ -11,7 +11,7 @@ A Python-based simulation system for autonomous driving cars on a 2D grid field.
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/AutoDrive.git
+   git clone https://github.com/MorbidCuriosity84/AutoDrive.git
    cd AutoDrive
    ```
 
