@@ -130,6 +130,7 @@ class Simulation:
         try:
             val = int(val)
             if val == 1:
+                self.steps = 1
                 self.setup()
             if val == 2:
                 sys.exit(0)
