@@ -50,10 +50,13 @@ class Simulation:
 
         try:
             val = int(val)
+            
             if val == 1:
                 self.add_car()
             if val == 2:
                 self.run()
+            if val != 1 and val != 2:
+                raise ValueError()
         except ValueError as e:
             print("Must enter 1 or 2")
             self.add_car_or_run()
@@ -92,12 +95,14 @@ class Simulation:
             x = int(pos_x_y_dir[0]) 
             y = int(pos_x_y_dir[1])
             direction = pos_x_y_dir[2] 
+            assert x > 0
+            assert y > 0
             assert direction.upper() in Simulation.DIRECTIONS
         except ValueError as e:
             print('Values must be integers')
             x, y, direction = self.specify_initial_pos(name)
         except AssertionError as e:
-            print("Must enter two integers and a direction")
+            print("Must enter two positive integers and a direction")
             x, y, direction = self.specify_initial_pos(name)
 
         return x, y, direction.upper()
