@@ -10,7 +10,7 @@ def car() -> Car:
     move_queue = Queue()
     for move in list_moves:
         move_queue.put(move)
-    car = Car(Point(0,0), move_queue, 'S')
+    car = Car('A', Point(0,0), move_queue, 'S')
     return car
     
 
@@ -145,3 +145,8 @@ def test_move_10(car, field):
     car.move(move, field.size.x, field.size.y)
     assert car.direction == 'E'
     assert car.pos == Point(1,1)
+
+def test_empty_moves(car):
+    assert not car.moves.empty()
+    car.empty_moves()
+    assert car.moves.empty()

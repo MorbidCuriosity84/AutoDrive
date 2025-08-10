@@ -11,7 +11,6 @@ class Field:
         self.cars: List[Car] = []
 
 
-    def add_car(self, car: Car) -> None:
-        self.cars.append(car)
-
+    def is_all_moved(self):
+        return all([car.moves.empty() for car in self.cars])
     

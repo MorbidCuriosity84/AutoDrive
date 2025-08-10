@@ -1,4 +1,3 @@
-from typing import List
 from queue import Queue
 from point import Point
 
@@ -13,7 +12,8 @@ class Car:
     }
 
 
-    def __init__(self, pos: Point, moves: List[str], direction: str):        
+    def __init__(self, name: str, pos: Point, moves: Queue[str], direction: str):        
+        self.name = name
         self.pos: Point = pos
         self.moves: Queue[str] = moves
         self.direction: str = direction
@@ -60,9 +60,7 @@ class Car:
 
 
     def check_move(self, move: Point, size_x: int, size_y: int) -> bool:
-        print('before ', self.pos, move)
         pos_after_move = self.pos + move
-        print('after ', self.pos, move)
 
         if pos_after_move.x > size_x:
             return False
@@ -81,3 +79,7 @@ class Car:
     
     def update_pos(self, move: Point) -> None:        
         self.pos += move
+
+    def empty_moves(self):
+        while not self.moves.empty():
+            self.moves.get()
