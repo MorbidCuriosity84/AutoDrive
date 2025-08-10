@@ -12,5 +12,5 @@ class Field:
 
 
     def is_all_moved(self):
-        return all([car.moves.empty() for car in self.cars])
+        return all([not car.moves for car in self.cars])
     

@@ -1,4 +1,4 @@
-from queue import Queue
+from typing import List
 from point import Point
 
 
@@ -12,12 +12,13 @@ class Car:
     }
 
 
-    def __init__(self, name: str, pos: Point, moves: Queue[str], direction: str):        
+    def __init__(self, name: str, pos: Point, moves: str, direction: str):        
         self.name = name
         self.pos: Point = pos
-        self.moves: Queue[str] = moves
+        self.moves: List[str] = list(moves[::-1])
         self.direction: str = direction
         self.active = True
+        
 
 
     def turn(self, turn: str) -> None:
@@ -81,5 +82,7 @@ class Car:
         self.pos += move
 
     def empty_moves(self):
-        while not self.moves.empty():
-            self.moves.get()
+        self.moves = []
+
+    def __repr__(self):        
+        return f"- {self.name}, ({self.pos.x},{self.pos.y}) {self.direction}, {self.moves}\n"

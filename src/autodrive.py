@@ -11,6 +11,7 @@ if __name__ == '__main__':
     for str_move in str_moves:
         moves.put(str_move)
     car_A =  Car('A', Point(0,0), moves, 'E')
+    print(car_A)
     
     moves = Queue()
     for str_move in str_moves:

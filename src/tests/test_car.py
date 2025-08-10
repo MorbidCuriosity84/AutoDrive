@@ -5,12 +5,9 @@ from field import Field
 from point import Point
 
 @pytest.fixture
-def car() -> Car:
-    list_moves = ['F', 'R', 'F', 'R', 'F', 'F', 'R', 'F', 'F']
-    move_queue = Queue()
-    for move in list_moves:
-        move_queue.put(move)
-    car = Car('A', Point(0,0), move_queue, 'S')
+def car() -> Car:    
+    moves = "FRFRFFRFF"    
+    car = Car('A', Point(0,0), moves, 'S')
     return car
     
 
@@ -39,7 +36,7 @@ def test_check_move_4(car, field):
     assert valid
 
 def test_move(car, field):
-    move = car.moves.get()
+    move = car.moves.pop()
     assert move == 'F'
     assert car.direction == 'S'
     assert Car.move_map[car.direction] == Point(0, -1)
@@ -49,16 +46,16 @@ def test_move(car, field):
     assert car.pos == Point(0,0)
 
 def test_move_2(car, field):
-    move = car.moves.get()
-    move = car.moves.get()
+    move = car.moves.pop()
+    move = car.moves.pop()
     assert move == 'R'
     assert car.direction == 'S'
     car.move(move, field.size.x, field.size.y)
     assert car.direction == 'W'
 
 def test_move_3(car, field):
-    move = car.moves.get()
-    move = car.moves.get()
+    move = car.moves.pop()
+    move = car.moves.pop()
     assert move == 'R'
     assert car.direction == 'S'
     car.move(move, field.size.x, field.size.y)
@@ -66,9 +63,9 @@ def test_move_3(car, field):
 
 def test_move_4(car, field):
     for _ in range(2):
-        move = car.moves.get()
+        move = car.moves.pop()
         car.move(move, field.size.x, field.size.y)    
-    move = car.moves.get()
+    move = car.moves.pop()
     assert move == 'F'
     assert car.direction == 'W'
     assert car.pos == Point(0, 0)
@@ -78,9 +75,9 @@ def test_move_4(car, field):
 
 def test_move_5(car, field):
     for _ in range(3):
-        move = car.moves.get()
+        move = car.moves.pop()
         car.move(move, field.size.x, field.size.y)    
-    move = car.moves.get()
+    move = car.moves.pop()
     assert move == 'R'
     assert car.direction == 'W'
     car.move(move, field.size.x, field.size.y)
@@ -88,9 +85,9 @@ def test_move_5(car, field):
 
 def test_move_6(car, field):
     for _ in range(4):
-        move = car.moves.get()
+        move = car.moves.pop()
         car.move(move, field.size.x, field.size.y)    
-    move = car.moves.get()
+    move = car.moves.pop()
     assert move == 'F'
     assert car.direction == 'N'
     assert car.pos == Point(0,0)
@@ -100,9 +97,9 @@ def test_move_6(car, field):
 
 def test_move_7(car, field):
     for _ in range(5):
-        move = car.moves.get()
+        move = car.moves.pop()
         car.move(move, field.size.x, field.size.y)    
-    move = car.moves.get()
+    move = car.moves.pop()
     assert move == 'F'
     assert car.direction == 'N'
     assert car.pos == Point(0,1)
@@ -112,9 +109,9 @@ def test_move_7(car, field):
 
 def test_move_8(car, field):
     for _ in range(6):
-        move = car.moves.get()
+        move = car.moves.pop()
         car.move(move, field.size.x, field.size.y)    
-    move = car.moves.get()
+    move = car.moves.pop()
     assert move == 'R'
     assert car.direction == 'N'
     assert car.pos == Point(0,1)
@@ -124,9 +121,9 @@ def test_move_8(car, field):
 
 def test_move_9(car, field):
     for _ in range(7):
-        move = car.moves.get()
+        move = car.moves.pop()
         car.move(move, field.size.x, field.size.y)    
-    move = car.moves.get()
+    move = car.moves.pop()
     assert move == 'F'
     assert car.direction == 'E'
     assert car.pos == Point(0,1)
@@ -136,9 +133,9 @@ def test_move_9(car, field):
 
 def test_move_10(car, field):
     for _ in range(8):
-        move = car.moves.get()
+        move = car.moves.pop()
         car.move(move, field.size.x, field.size.y)    
-    move = car.moves.get()
+    move = car.moves.pop()
     assert move == 'F'
     assert car.direction == 'E'
     assert car.pos == Point(1,1)
@@ -147,6 +144,6 @@ def test_move_10(car, field):
     assert car.pos == Point(1,1)
 
 def test_empty_moves(car):
-    assert not car.moves.empty()
+    assert car.moves
     car.empty_moves()
-    assert car.moves.empty()
+    assert not car.moves

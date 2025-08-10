@@ -7,6 +7,10 @@ class Simulation:
         self.steps = 1
 
 
+    def setup(self):
+        pass        
+
+
     def check_collisions(self):
         for car_A in self.field.cars:
             for car_B in self.field.cars:
@@ -26,8 +30,8 @@ class Simulation:
     def run(self):
         while not self.field.is_all_moved():
             for car in self.field.cars:
-                if not car.moves.empty() and car.active:
-                    car.move(car.moves.get(), self.field.size.x, self.field.size.y)
+                if car.moves and car.active:
+                    car.move(car.moves.pop(), self.field.size.x, self.field.size.y)
                     self.check_collisions()
             self.steps += 1
             
